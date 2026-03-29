@@ -24,8 +24,10 @@ app.use('/api/costos', require('./routes/costos'));
 app.use('/api/clientes', require('./routes/clientes'));
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ledger', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  retryWrites: true,
+  readPreference: 'primaryPreferred'
 }).then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
